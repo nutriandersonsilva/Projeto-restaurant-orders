@@ -1,22 +1,25 @@
-from src.models.dish import Dish
-from src.models.ingredient import Ingredient, Restriction
+from src.models.dish import Dish  # noqa: F401, E261, E501
+from src.models.ingredient import Ingredient, Restriction 
 import pytest
 
 
+# Req 2
 def test_dish():
-    dish1 = Dish("Macarrão Carbonara", 15.00)
-    dish2 = Dish("Lasanha", 20.00)
-    dish3 = Dish("Pizza Margherita", 18.00)
+    # Initialization of dishes
+    dish1 = Dish("lasanha", 10.50)
+    dish2 = Dish("lasanha", 10.50)
+    dish3 = Dish("Pizza", 15.00)
 
-    ingredient1 = Ingredient("bacon")
-    ingredient2 = Ingredient("queijo parmesão")
-    ingredient3 = Ingredient("molho branco")
+    # Initialization of ingredients
+    ingredient1 = Ingredient("ovo")
+    ingredient2 = Ingredient("farinha")
 
-    assert dish1.name == "Macarrão Carbonara"
-    assert dish1.price == 15.00
+    assert dish1.name == "lasanha"
+    assert dish1.price == 10.50
     assert dish1.recipe == {}
 
-    assert dish1.__repr__() == "Dish('Macarrão Carbonara', R$15.00)"
+    # testing functions
+    assert dish1.__repr__() == "Dish('lasanha', R$10.50)"
     assert dish1.__repr__() == dish2.__repr__()
     assert dish1.__repr__() != dish3.__repr__()
 
@@ -31,7 +34,6 @@ def test_dish():
 
     dish1.add_ingredient_dependency(ingredient1, 2)
     dish1.add_ingredient_dependency(ingredient2, 3)
-    dish2.add_ingredient_dependency(ingredient3, 4)
 
     assert dish1.get_ingredients() == {ingredient1, ingredient2}
     assert dish1.recipe == {ingredient1: 2, ingredient2: 3}
@@ -41,8 +43,9 @@ def test_dish():
         Restriction.ANIMAL_DERIVED
     }
 
+    # testing Error
     with pytest.raises(ValueError):
-        Dish("Macarrão Carbonara", 0)
+        Dish("lasanha", 0)
 
     with pytest.raises(TypeError):
-        Dish("Macarrão Carbonara", "15")
+        Dish("lasanha", "10")
