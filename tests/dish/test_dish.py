@@ -1,16 +1,13 @@
-from src.models.dish import Dish  # noqa: F401, E261, E501
-from src.models.ingredient import Ingredient, Restriction 
+from src.models.dish import Dish
+from src.models.ingredient import Ingredient, Restriction
 import pytest
 
 
-# Req 2
 def test_dish():
-    # Initialization of dishes
     dish1 = Dish("lasanha", 10.50)
     dish2 = Dish("lasanha", 10.50)
     dish3 = Dish("Pizza", 15.00)
 
-    # Initialization of ingredients
     ingredient1 = Ingredient("ovo")
     ingredient2 = Ingredient("farinha")
 
@@ -18,7 +15,6 @@ def test_dish():
     assert dish1.price == 10.50
     assert dish1.recipe == {}
 
-    # testing functions
     assert dish1.__repr__() == "Dish('lasanha', R$10.50)"
     assert dish1.__repr__() == dish2.__repr__()
     assert dish1.__repr__() != dish3.__repr__()
@@ -43,7 +39,6 @@ def test_dish():
         Restriction.ANIMAL_DERIVED
     }
 
-    # testing Error
     with pytest.raises(ValueError):
         Dish("lasanha", 0)
 
