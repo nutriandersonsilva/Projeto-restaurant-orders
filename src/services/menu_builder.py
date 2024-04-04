@@ -2,7 +2,6 @@ from typing import Dict, List
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
-# from src.models.ingredient import Restriction
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -32,17 +31,12 @@ class MenuBuilder:
         for dish in dishes:
             dish_dict = dict()
             dish_dict["dish_name"] = dish.name
-            dish_dict["ingredients"] = [
-                ingredient for ingredient in dish.recipe.keys()
-            ]
+            dish_dict["ingredients"] = dish.get_ingredients()
             dish_dict["price"] = dish.price
-            dish_dict["restrictions"] = [
-                restriction
-                for ingredient in dish.recipe.keys()
-                for restriction in ingredient.restrictions
-            ]
+            dish_dict["restrictions"] = dish.get_restrictions()
 
             if restriction not in dish_dict["restrictions"]:
-                menu_list.append(dish_dict)
+                if self.inventory.check_recipe_availability(dish.recipe):
+                    menu_list.append(dish_dict)
 
         return menu_list

@@ -27,7 +27,8 @@ class InventoryMapping:
         self.inventory = read_csv_inventory(inventory_file_path)
 
     def check_recipe_availability(self, recipe: Recipe) -> bool:
-        """Verifica se há ingredientes suficientes no inventário para uma receita."""
+        """Verifica se há ingredientes suficientes
+        no inventário para uma receita."""
         for ingredient, amount in recipe.items():
             if (
                 ingredient not in self.inventory
